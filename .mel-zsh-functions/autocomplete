@@ -1,0 +1,13 @@
+## autocomplete ##
+
+# set up autocomplete 
+# prerequisites...
+
+function autocomplete {
+    autoload -U +X compinit && compinit
+    autoload -U +X bashcompinit && bashcompinit
+    source /usr/local/etc/bash_completion.d/python-argcomplete
+
+    [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && \
+    . "/usr/local/etc/profile.d/bash_completion.sh"
+}

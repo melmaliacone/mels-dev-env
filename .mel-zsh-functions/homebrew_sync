@@ -1,0 +1,13 @@
+## homebrew_sync ##
+
+# homebrew update and upgrade command
+# unlink tfenv before upgrading and link after done
+# then brew cleanup and doctor
+# include HOMEBREW_GITHUB_API_TOKEN to prevent homebrew use limits
+
+function homebrew_sync {
+    export HOMEBREW_GITHUB_API_TOKEN=$(cat $HOME/.config/github/token);
+    echo "\nupdating homebrew..." && brew update && \
+    echo "\nupgrading homebrew formulas..." && brew upgrade && \
+    echo "\ncleaning up and running brew doctor..." && brew cleanup && brew doctor
+}
