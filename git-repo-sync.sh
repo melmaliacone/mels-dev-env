@@ -2,10 +2,9 @@
 
 ##### git functions ###########################################################
 
-# file and environment variable used to keep track of current git repo
+# environment variable used to keep track of current git repo
 # needed to prevent git_checkout_fetch_pull for running every time you change
 # directories in the same git repo
-echo "" > ~/.prev_git_repo
 export curr_git_repo=""
 
 # alias builtin cd to new git_cd
@@ -24,7 +23,7 @@ function git_cd {
 function sync_git_repo {
     if ! is_git_repo; then
         if [[ $curr_git_repo != "" ]]; then
-            echo "export curr_git_repo=" > ~/.prev_git_repo && . ~/.prev_git_repo
+            set_curr_git_repo ""
         fi
         return
     fi
@@ -36,7 +35,6 @@ function sync_git_repo {
         stash_and_checkout_default_branch $default_branch && \
         git_checkout_fetch_pull && \
         checkout_prev_branch_and_stash_pop $current_branch
-        . ~/.prev_git_repo
     fi
 }
 
@@ -75,18 +73,18 @@ function is_git_repo {
 function is_new_git_repo {
     git_repo_top_level=$(git rev-parse --show-toplevel)
     if [[ $git_repo_top_level != $curr_git_repo ]]; then
-        write_curr_git_repo_to_file $git_repo_top_level && \
+        set_curr_git_repo $git_repo_top_level && \
         return 0;
     else
         return 1;
     fi
 }
 
-# writes curr_git_repo environment variable to file to that it can be sourced
+# set curr_git_repo environment variable
 # used to keep track of whether you're changing into a *new* git repo directory
-function write_curr_git_repo_to_file {
+function set_curr_git_repo {
     git_repo_top_level=$1
-    echo "export curr_git_repo=$git_repo_top_level" > ~/.prev_git_repo
+    export curr_git_repo=$git_repo_top_level
 }
 
 alias m2m='change_default_branch_to_main'
