@@ -35,7 +35,7 @@ function sync_git_repo {
     if is_new_git_repo; then
         stash_and_checkout_default_branch $default_branch && \
         git_checkout_fetch_pull && \
-        checkout_prev_branch_and_stash_pop $default_branch $current_branch
+        checkout_prev_branch_and_stash_pop $current_branch
         . ~/.prev_git_repo
     fi
 }
@@ -49,7 +49,6 @@ function stash_and_checkout_default_branch {
 # fetch and pull changes from upstream
 function git_checkout_fetch_pull {
     default_branch=$1
-    current_branch=$2
 
     git fetch --all -p && \
     git pull origin $default_branch
@@ -57,8 +56,7 @@ function git_checkout_fetch_pull {
 
 # pop from your stash if it's not empty and then check out the previous branch
 function checkout_prev_branch_and_stash_pop {
-    default_branch=$1
-    current_branch=$2
+    current_branch=$1
     git checkout $current_branch
     stash_size=$(git stash list | wc -l)
     if (( $stash_size > 0 )); then
@@ -90,6 +88,7 @@ function write_curr_git_repo_to_file {
     git_repo_top_level=$1
     echo "export curr_git_repo=$git_repo_top_level" > ~/.prev_git_repo
 }
+
 alias m2m='change_default_branch_to_main'
 
 # run locally after changing repo default branch from master to main
