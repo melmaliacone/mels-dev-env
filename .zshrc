@@ -155,7 +155,7 @@ function sync_git_repo {
     if is_new_git_repo; then
         stash_and_checkout_default_branch $default_branch && \
         git_checkout_fetch_pull && \
-        stash_pop_and_checkout_prev_branch $default_branch $current_branch
+        checkout_prev_branch_and_stash_pop $default_branch $current_branch
         . ~/.prev_git_repo
     fi
 }
@@ -176,14 +176,14 @@ function git_checkout_fetch_pull {
 }
 
 # pop from your stash if it's not empty and then check out the previous branch
-function stash_pop_and_checkout_prev_branch {
+function checkout_prev_branch_and_stash_pop {
     default_branch=$1
     current_branch=$2
+    git checkout $current_branch
     stash_size=$(git stash list | wc -l)
     if (( $stash_size > 0 )); then
         git stash pop
     fi
-    git checkout $current_branch
 }
 
 # check if current directory is a git repo
