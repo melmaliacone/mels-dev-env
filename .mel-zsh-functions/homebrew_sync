@@ -6,8 +6,9 @@
 # include HOMEBREW_GITHUB_API_TOKEN to prevent homebrew use limits
 
 function homebrew_sync {
-    export HOMEBREW_GITHUB_API_TOKEN=$(cat $HOME/.config/github/token);
-    echo "\nupdating homebrew..." && brew update && \
-    echo "\nupgrading homebrew formulas..." && brew upgrade && \
-    echo "\ncleaning up and running brew doctor..." && brew cleanup && brew doctor
+    # shellcheck disable=SC2155
+    export HOMEBREW_GITHUB_API_TOKEN=$(cat "${HOME}"/.config/github/token)
+    printf "\nupdating homebrew..." && brew update && \
+    printf "\nupgrading homebrew formulas..." && brew upgrade && \
+    printf "\ncleaning up and running brew doctor..." && brew cleanup && brew doctor
 }

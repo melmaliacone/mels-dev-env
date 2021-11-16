@@ -36,7 +36,7 @@ autoload -U +X autocomplete && autocomplete
 autoload -U +X homebrew_sync && homebrew_sync
 
 # gcloud sdk
-autoload -U +X gcp_sdk && gcp_sdk
+autoload -U +X gcloud_sdk && gcloud_sdk
 
 ###############################################################################
 
@@ -152,16 +152,16 @@ function sync_git_repo {
     current_branch=$(git branch --show-current)
 
     if is_new_git_repo; then
-        stash_and_checkout_default_branch $default_branch && \
-        git_checkout_fetch_pull && \
-        checkout_prev_branch_and_stash_pop $current_branch
+        stash_and_checkout_default_branch "${default_branch}" && \
+        git_checkout_fetch_pull "${default_branch}" && \
+        checkout_prev_branch_and_stash_pop "${current_branch}"
     fi
 }
 
 # stash any current changes and checkout default branch
 function stash_and_checkout_default_branch {
     default_branch=$1
-    git stash && git checkout $default_branch
+    git stash && git checkout "${default_branch}"
 }
 
 # fetch and pull changes from upstream
@@ -169,15 +169,15 @@ function git_checkout_fetch_pull {
     default_branch=$1
 
     git fetch --all -p && \
-    git pull origin $default_branch
+    git pull origin "${default_branch}"
 }
 
 # pop from your stash if it's not empty and then check out the previous branch
 function checkout_prev_branch_and_stash_pop {
     current_branch=$1
-    git checkout $current_branch
+    git checkout "${current_branch}"
     stash_size=$(git stash list | wc -l)
-    if (( $stash_size > 0 )); then
+    if (( stash_size > 0 )); then
         git stash pop
     fi
 }
@@ -192,8 +192,8 @@ function is_git_repo {
 # otherwise git_repo_top_level will error
 function is_new_git_repo {
     git_repo_top_level=$(git rev-parse --show-toplevel)
-    if [[ $git_repo_top_level != $curr_git_repo ]]; then
-        set_curr_git_repo $git_repo_top_level && \
+    if [[ "${git_repo_top_level}" != "${curr_git_repo}" ]]; then
+        set_curr_git_repo "${git_repo_top_level}" && \
         return 0;
     else
         return 1;
