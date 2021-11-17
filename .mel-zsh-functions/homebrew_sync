@@ -8,7 +8,8 @@
 function homebrew_sync {
     # shellcheck disable=SC2155
     export HOMEBREW_GITHUB_API_TOKEN=$(cat "${HOME}"/.config/github/token)
-    printf "\nupdating homebrew..." && brew update && \
-    printf "\nupgrading homebrew formulas..." && brew upgrade && \
-    printf "\ncleaning up and running brew doctor..." && brew cleanup && brew doctor
+    printf "\nupdating homebrew...\n" && brew update && \
+    printf "\nupgrading homebrew formulas...\n" && brew upgrade && \
+    printf "\nrunning brew cleanup...\n" && brew cleanup
+    printf "\nrunning brew doctor...\n" && brew doctor
 }
