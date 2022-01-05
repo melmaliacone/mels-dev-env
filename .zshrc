@@ -51,11 +51,6 @@ alias h='fc -lin'
 alias b='cd -'
 alias sz='source ~/.zshrc'
 
-function create_zshrc_copy_before_opening {
-    date=$(date)
-    printf "\n[alias: mzsh] making copy of old zshrc before editing...\n" && cp ~/.zshrc "${~/zshrc-$date}" && code ~/.zshrc
-}
-
 # functions for zshrc so i don't lose things
 function create_zshrc_copy {
     file="zshrc-$(date)"
