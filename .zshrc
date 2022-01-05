@@ -19,9 +19,7 @@ export ZSH=/Users/melcone/.oh-my-zsh
 # set default editor
 export EDITOR='vim'
 
-alias sz='source ~/.zshrc'
-
-##### my startup functions #####################################################
+##### my startup functions ##################################################
 
 # function path for my custom functions
 export FPATH=~/.mel-zsh-functions:$FPATH
@@ -38,10 +36,9 @@ autoload -U +X homebrew_sync && homebrew_sync
 # gcloud sdk
 autoload -U +X gcloud_sdk && gcloud_sdk
 
-###############################################################################
+#############################################################################
 
-
-##### aliases #################################################################
+##### aliases ###############################################################
 
 # Homebrew authentication
 export HOMEBREW_GITHUB_API_TOKEN=$(cat $HOME/.config/github/token);
@@ -52,7 +49,19 @@ alias h='fc -lin'
 
 # frequently used
 alias b='cd -'
-alias zshrc='code ~/.zshrc'
+alias sz='source ~/.zshrc'
+
+function create_zshrc_copy_before_opening {
+    date=$(date)
+    printf "\n[alias: mzsh] making copy of old zshrc before editing...\n" && cp ~/.zshrc "${~/zshrc-$date}" && code ~/.zshrc
+}
+
+# functions for zshrc so i don't lose things
+function create_zshrc_copy {
+    file="zshrc-$(date)"
+    printf "[alias: mzsh] making copy of old zshrc before editing...\nfile name: %s\n" $file && cp "/Users/melcone/.zshrc" "${file}" && code ~/.zshrc
+}
+alias mz='create_zshrc_copy'
 
 # terraform
 alias tf='terraform'
@@ -61,6 +70,7 @@ alias tfclean='rm -rf .terraform/ && rm *tfstate*'
 # aws identity
 alias awsid='aws sts get-caller-identity'
 alias delid='unset AWS_ACCESS_KEY_ID && unset AWS_SECRET_ACCESS_KEY && unset AWS_SESSION_TOKEN && unset AWS_PROFILE'
+alias sso='aws sso login'
 
 # python
 alias python='python3'
@@ -76,16 +86,6 @@ alias drmi='docker system prune -a'
 
 #helm
 alias hrm='helm uninstall $(helm ls -a --all-namespaces --short)'
-
-# git global config for first time set up
-#touch ~/.prev_git_repo
-#git config --global user.name "Mel Cone"
-#git config --global user.email "melmaliacone@gmail.com"
-#git config --global pull.rebase true
-#git config --global user.signingkey <my signing key>
-#git config --global commit.gpgsign true
-#git config --global gpg.program /usr/local/MacGPG2/bin/gpg
-#git config --global core.editor "vim"
 
 # git aliases
 alias ga='git add'
@@ -120,7 +120,7 @@ alias gstf='git stash push'
 alias gstp='git stash pop'
 alias gstl='git stash list'
 
-##### git functions ###########################################################
+##### git functions #########################################################
 
 # environment variable used to keep track of current git repo
 # needed to prevent git_checkout_fetch_pull for running every time you change
@@ -217,7 +217,7 @@ function change_default_branch_to_main {
     git remote set-head origin -a
 }
 
-###############################################################################
+#############################################################################
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -235,3 +235,15 @@ ENABLE_CORRECTION="false"
 COMPLETION_WAITING_DOTS="true"
 
 source $ZSH/oh-my-zsh.sh
+
+### Old aliases and such ####################################################
+
+# git global config for first time set up
+#touch ~/.prev_git_repo
+#git config --global user.name "Mel Cone"
+#git config --global user.email "melmaliacone@gmail.com"
+#git config --global pull.rebase true
+#git config --global user.signingkey <my signing key>
+#git config --global commit.gpgsign true
+#git config --global gpg.program /usr/local/MacGPG2/bin/gpg
+#git config --global core.editor "vim"
