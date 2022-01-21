@@ -63,8 +63,8 @@ alias tf='terraform'
 alias tfclean='rm -rf .terraform/ && rm *tfstate*'
 
 # aws identity
-alias awsid='aws sts get-caller-identity'
-alias delid='unset AWS_ACCESS_KEY_ID && unset AWS_SECRET_ACCESS_KEY && unset AWS_SESSION_TOKEN && unset AWS_PROFILE'
+alias aid='aws sts get-caller-identity'
+alias did='unset AWS_ACCESS_KEY_ID && unset AWS_SECRET_ACCESS_KEY && unset AWS_SESSION_TOKEN && unset AWS_PROFILE'
 alias sso='aws sso login'
 
 # python
