@@ -1,12 +1,5 @@
 ## autocomplete ##
 
-# set up autocomplete
-# prerequisites: python installed and the following commands
-### brew install bash-completion
-### pip install argcomplete
-### activate-global-python-argcomplete
-
-# partially taken from stack overflow: https://stackoverflow.com/questions/3249432/can-a-bash-tab-completion-script-be-used-in-zsh
 function autocomplete {
     autoload -U +X compinit && compinit
     autoload -U +X bashcompinit && bashcompinit

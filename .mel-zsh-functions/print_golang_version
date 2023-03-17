@@ -1,0 +1,9 @@
+## print_golang_version ##
+
+# print the current version of go
+
+function print_golang_version {
+    go_version=$(go version | cut -d ' ' -f3)
+    go_version=${go_version:2}
+    printf "\ngolang version changed to %s\n" $go_version
+}

@@ -1,13 +1,14 @@
 ## homebrew_sync ##
 
-# homebrew update and upgrade command
-# unlink tfenv before upgrading and link after done
-# then brew cleanup and doctor
-# include HOMEBREW_GITHUB_API_TOKEN to prevent homebrew use limits
-
 function homebrew_sync {
     # shellcheck disable=SC2155
-    export HOMEBREW_GITHUB_API_TOKEN=$(cat "${HOME}"/.config/github/token)
+    # relink the latest go version, if I have it set to 1.17 (needed for a specific github repo)
+    export HOMEBREW_GITHUB_API_TOKEN=$(<>)
+    if [[ $(go version) == *"1.17"* ]]; then
+        brew unlink go > /dev/null 2>&1 && \
+        brew link go > /dev/null 2>&1 && \
+        print_golang_version && \
+    fi
     printf "\nupdating homebrew...\n" && brew update && \
     printf "\nupgrading homebrew formulas...\n" && brew upgrade && \
     printf "\nrunning brew cleanup...\n" && brew cleanup
