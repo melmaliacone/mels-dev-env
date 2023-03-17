@@ -1,0 +1,9 @@
+## vault_login ##
+
+# login to vault server
+function vault_login {
+    # shellcheck disable=SC2155
+    export VAULT_ADDR=<>
+    printf "\nlogging into vault..." && \
+    vault login -method=github -path=<> token="$(<>)"
+}

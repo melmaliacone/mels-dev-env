@@ -1,6 +1,6 @@
 #!/bin/bash
 
-##### git functions ###########################################################
+### git functions ##############################################################
 
 # environment variable used to keep track of current git repo
 # needed to prevent git_checkout_fetch_pull for running every time you change
@@ -86,15 +86,3 @@ function set_curr_git_repo {
     git_repo_top_level=$1
     export curr_git_repo=$git_repo_top_level
 }
-
-alias m2m='change_default_branch_to_main'
-
-# run locally after changing repo default branch from master to main
-function change_default_branch_to_main {
-    git branch -m master main && \
-    git fetch origin && \
-    git branch -u origin/main main && \
-    git remote set-head origin -a
-}
-
-###############################################################################
