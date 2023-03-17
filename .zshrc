@@ -74,6 +74,7 @@ alias tfclean='rm -rf .terraform/ && .terraform.lock.hcl && rm *tfstate*'
 alias awsid='aws sts get-caller-identity'
 alias did='unset AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY AWS_SESSION_TOKEN AWS_PROFILE AWS_REGION'
 alias cawsp='echo $AWS_PROFILE && echo $AWS_REGION && echo $AWS_ACCOUNT'
+export AWS_ACCOUNT=$(aws sts get-caller-identity --query Account --output text)
 
 # code repo shortcuts
 alias mc='cd ~/code'
