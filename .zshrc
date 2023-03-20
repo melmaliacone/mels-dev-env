@@ -291,6 +291,8 @@ function awsp() {
 function awsp_sso () {
     awsp
     aws sso login
+    # update env var to use in iTerm2 status bar components
+    export AWS_ACCOUNT=$(aws sts get-caller-identity --query Account --output text)
 }
 
 ################################################################################
