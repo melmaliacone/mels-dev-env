@@ -274,10 +274,10 @@ function set_kube_context_ns {
     export KUBE_NS=$(kubectl config view --minify -o jsonpath='{..namespace}'; echo)
 }
 
-##### aws functions ###########################################################
+##### aws functions ############################################################
 
 # interactively select AWS profile from my aws config
-function awsp() {
+function awsp_env() {
     unset AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY AWS_SESSION_TOKEN AWS_PROFILE AWS_REGION
     AWS_PROFILE=$(grep -w profile $HOME/.aws/config | sed "s/[][]//g" | cut -d ' ' -f 2 | sort | fzf)
     export AWS_PROFILE
@@ -288,8 +288,8 @@ function awsp() {
 }
 
 # calls awsp function and then logs into aws via sso
-function awsp_sso () {
-    awsp
+function awsp() {
+    awsp_env
     aws sso login
     # update env var to use in iTerm2 status bar components
     export AWS_ACCOUNT=$(aws sts get-caller-identity --query Account --output text)
